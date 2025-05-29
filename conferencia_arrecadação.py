@@ -104,31 +104,18 @@ def tratar_faturamento(df):
 
 def tratar_arrecadacao(dfa):
     
-    dfa = dfa[dfa['id_Participante'].notna()]
-
-# Comissionamento
-    dfa = dfa.loc[:, [
-    'canal_distribuicao', 'tipo_canal', 'campanha',
-    'id_Participante', 'data_nascimento', 'sexo', 'capital_segurado',
-    'competencia', 'sequencia', 'meio_pagamento', 'data_vencimento',
-    'data_recebimento', 'status', 'INSTITUTO', 'Total']]
+    dfa = dfa[dfa['Participacao'].notna()]
 
     dfa.rename(columns={
-    'id_Participante': 'id_participante',
-    'INSTITUTO': 'rec_instituto',
-    'Total': 'pag_total'
+    'Participacao': 'participacao',
+    'Valor Previsto':'valor_previsto',
+    'Valor Realizado':'valor_realizado'
 }, inplace=True)
-
-# Comissionamento
-    dfa['data_nascimento'] = pd.to_datetime(dfa['data_nascimento'], errors='coerce')
-    dfa['data_vencimento'] = pd.to_datetime(dfa['data_vencimento'], errors='coerce')
-    dfa['data_recebimento'] = pd.to_datetime(dfa['data_recebimento'], errors='coerce')
-    dfa['competencia'] = pd.to_datetime(dfa['competencia'], errors='coerce')
 
 # === CONVERSÃO DE VALORES MONETÁRIOS ===
 
-    dfa['rec_instituto'] = dfa['rec_instituto'].apply(limpa_moeda)
-    dfa['pag_total'] = dfa['pag_total'].apply(limpa_moeda)
+    dfa['valor_previsto'] = dfa['valor_previsto'].apply(limpa_moeda)
+    dfa['valor_realizado'] = dfa['valor_realizado'].apply(limpa_moeda)
     
     return dfa
 
@@ -165,7 +152,7 @@ if uploaded_file:
 uploaded_file_a = st.file_uploader("Envie a arrecadação atual (.csv)", type="csv")
 
 if uploaded_file_a:
-    dfa = pd.read_csv(uploaded_file_a, delimiter=',', encoding='latin-1')
+    dfa = pd.read_csv(uploaded_file_a, delimiter=',', encoding='utf-8-sig')
     st.write("Prévia dos dados recebidos:", dfa.head())
 
 # Processamento
@@ -184,4 +171,5 @@ if uploaded_file_a:
         file_name="arrecadacao_mensal.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 
