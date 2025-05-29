@@ -105,11 +105,17 @@ def tratar_faturamento(df):
 def tratar_arrecadacao(dfa):
     
     dfa = dfa[dfa['Participacao'].notna()]
+    
+    dfa.columns = dfa.columns.str.lower()
 
     dfa.rename(columns={
     'Participacao': 'participacao',
     'Valor Previsto':'valor_previsto',
-    'Valor Realizado':'valor_realizado'
+    'Valor Realizado':'valor_realizado',
+    '# Competência': 'competencia',
+    'Competência': 'mes_competencia',
+    'meio pagamento':'meio_pagamento',
+    'canal distribuicao': 'canal_distribuicao'
 }, inplace=True)
 
 # === CONVERSÃO DE VALORES MONETÁRIOS ===
@@ -171,5 +177,4 @@ if uploaded_file_a:
         file_name="arrecadacao_mensal.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-
 
