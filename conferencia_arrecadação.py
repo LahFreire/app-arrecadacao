@@ -165,7 +165,7 @@ if uploaded_file:
 uploaded_file_a = st.file_uploader("Envie a arrecadação atual (.csv)", type="csv")
 
 if uploaded_file_a:
-    dfa = pd.read_csv(uploaded_file, delimiter=',', encoding='latin-1')
+    dfa = pd.read_csv(uploaded_file_a, delimiter=',', encoding='latin-1')
     st.write("Prévia dos dados recebidos:", df.head())
 
 # Processamento
