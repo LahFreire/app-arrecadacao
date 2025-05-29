@@ -166,10 +166,10 @@ uploaded_file_a = st.file_uploader("Envie a arrecadação atual (.csv)", type="c
 
 if uploaded_file_a:
     dfa = pd.read_csv(uploaded_file_a, delimiter=',', encoding='latin-1')
-    st.write("Prévia dos dados recebidos:", df.head())
+    st.write("Prévia dos dados recebidos:", dfa.head())
 
 # Processamento
-    dfa_tratado = tratar_arrecadacao(df)
+    dfa_tratado = tratar_arrecadacao(dfa)
     st.success("Arquivo de arrecadação tratado com sucesso!")
     st.write("Prévia dos dados tratados:", dfa_tratado.head())
     
