@@ -109,11 +109,10 @@ def tratar_arrecadacao(dfa):
     dfa.columns = dfa.columns.str.lower()
 
     dfa.rename(columns={
-    'Participacao': 'participacao',
-    'Valor Previsto':'valor_previsto',
-    'Valor Realizado':'valor_realizado',
-    '# Competência': 'competencia',
-    'Competência': 'mes_competencia',
+    'valor previsto':'valor_previsto',
+    'valor realizado':'valor_realizado',
+    '# competência': 'competencia',
+    'competência': 'mes_competencia',
     'meio pagamento':'meio_pagamento',
     'canal distribuicao': 'canal_distribuicao'
 }, inplace=True)
