@@ -118,6 +118,8 @@ def tratar_arrecadacao(dfa):
     'canal distribuicao': 'canal_distribuicao'
 }, inplace=True)
 
+    st.write(dfa.columns)
+
 # === CONVERSÃO DE VALORES MONETÁRIOS ===
 
     dfa['valor_previsto'] = dfa['valor_previsto'].apply(limpa_moeda)
