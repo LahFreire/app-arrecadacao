@@ -114,17 +114,24 @@ def tratar_arrecadacao(dfa):
     '# competência': 'competencia',
     'competência': 'mes_competencia',
     'meio pagamento':'meio_pagamento',
-    'canal distribuicao': 'canal_distribuicao'
+    'canal distribuicao': 'canal_distribuicao',
+    'nome':'nome_proponente'
 }, inplace=True)
-
-    st.write(dfa.columns)
 
 # === CONVERSÃO DE VALORES MONETÁRIOS ===
 
     dfa['valor_previsto'] = dfa['valor_previsto'].apply(limpa_moeda)
     dfa['valor_realizado'] = dfa['valor_realizado'].apply(limpa_moeda)
+    dfa['mes_competencia'] = pd.to_datetime(dfa['mes_competencia'], errors = 'coerce').dt.to_period('M')
     
     return dfa
+
+def quem_pagou (df_tratado, dfa_tratado):
+    
+    dfp = pd.merge(df_tratado, dfa_tratado, how='right', on='nome_proponente')
+    
+    return dfp
+    
 
 # Interface Streamlit
 st.set_page_config(page_title="Tratador de Faturamento", layout="centered")
@@ -178,4 +185,3 @@ if uploaded_file_a:
         file_name="arrecadacao_mensal.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-
