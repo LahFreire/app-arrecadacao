@@ -126,13 +126,6 @@ def tratar_arrecadacao(dfa):
     
     return dfa
 
-def quem_pagou (df_tratado, dfa_tratado):
-    
-    dfp = pd.merge(df_tratado, dfa_tratado, how='right', on='nome_proponente')
-    
-    return dfp
-    
-
 # Interface Streamlit
 st.set_page_config(page_title="Tratador de Faturamento", layout="centered")
 st.title("🔧 Gerador de Faturamento")
@@ -185,3 +178,19 @@ if uploaded_file_a:
         file_name="arrecadacao_mensal.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
+dfp = pd.merge(dfa_tratado, df_tratado, how='right', on='nome_proponente')
+
+# Preparar para download
+buffer_p = BytesIO()
+dfp.to_excel(buffer_p, index=False)
+buffer_p.seek(0)
+
+st.download_button(
+     label="📥 Baixar Arquivo de arrecadação paga",
+     data=buffer_p,
+     file_name="faturamento_mensal.xlsx",
+     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+ )
+
+
