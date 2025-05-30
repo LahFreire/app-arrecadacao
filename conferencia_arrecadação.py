@@ -189,7 +189,7 @@ buffer_p.seek(0)
 st.download_button(
      label="📥 Baixar Arquivo de arrecadação paga",
      data=buffer_p,
-     file_name="faturamento_mensal.xlsx",
+     file_name="faturamento_pago.xlsx",
      mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
  )
 
