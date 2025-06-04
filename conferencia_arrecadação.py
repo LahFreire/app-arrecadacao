@@ -179,7 +179,7 @@ if uploaded_file_a:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
     
-dfp = pd.merge(dfa_tratado, df_tratado, how='right', on='participacao')
+dfp = pd.merge(dfa_tratado, df_tratado, how='right', on='participacao').drop_duplicates()
 
 # Preparar para download
 buffer_p = BytesIO()
