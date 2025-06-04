@@ -58,8 +58,7 @@ def tratar_faturamento(df):
         'data_vigencia', 'cpf', 'nome_proponente', 'qualificacao', 'data_nascimento', 'sexo', 'estado_civil', 'end_cidade', 'end_uf',
         'num_beneficio', 'tipo_beneficio', 'ultimo_beneficio', 'ultimo_desconto',
         'ultimo_capital', 'forma_pagamento', 'parcelas_aberto',
-        'data_ultimo_pagamento', 'programa_beneficio', 'promotor', 'distribuidor',
-        'canal_distribuicao', 'aposentado', 'pensionista','status_participacao']]
+        'data_ultimo_pagamento', 'programa_beneficio', 'promotor', 'distribuidor', 'aposentado', 'pensionista','status_participacao']]
 
     df['data_nascimento'] = pd.to_datetime(df['data_nascimento'], errors='coerce')
     df['data_assinatura_proposta'] = pd.to_datetime(df['data_assinatura_proposta'], errors='coerce')
@@ -126,6 +125,7 @@ def tratar_arrecadacao(dfa):
     
     return dfa
 
+
 # Interface Streamlit
 st.set_page_config(page_title="Tratador de Faturamento", layout="centered")
 st.title("🔧 Gerador de Faturamento")
@@ -178,8 +178,24 @@ if uploaded_file_a:
         file_name="arrecadacao_mensal.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+    
+print(pd.dtype(dfa_tratado, df_tratado))
 
-dfp = pd.merge(dfa_tratado, df_tratado, how='right', on='nome_proponente')
+dfp = pd.merge(dfa_tratado, df_tratado, how='right', on='participacao')
+
+dfp = pd.reindex(['participacao_x', 'competencia', 'nome_proponente', 'cpf_x',
+                  'mes_competencia', 'o_pagamento', 'status', 'valor_previsto', 
+                  'valor_realizado', 'distribuidor_x', 'al_distribuicao_x', 
+                  'campanha', 'participacao_y', 'proposta', 'num_proposta',
+                  'a_assinatura_proposta', 'data_vigencia', 'cpf_y', 'qualificacao', 
+                  'data_nascimento', 'sexo', 'estado_civil', 'end_cidade', 'end_uf', 
+                  'num_beneficio', 'o_beneficio', 'ultimo_beneficio', 'ultimo_desconto',
+                  'ultimo_capital', 'forma_pagamento', 'parcelas_aberto', 
+                  'data_ultimo_pagamento', 'programa_beneficio', 'promotor', 
+                  'distribuidor_y', 'canal_distribuicao_y', 'sentado', 'pensionista',
+                  'status_participacao', 'idade', 'faixa_etaria',	
+                  'regiao_uf', 'tipo_faturamento'
+], axis=1)
 
 # Preparar para download
 buffer_p = BytesIO()
@@ -192,5 +208,4 @@ st.download_button(
      file_name="faturamento_pago.xlsx",
      mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
  )
-
 
