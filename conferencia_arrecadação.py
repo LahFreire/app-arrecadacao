@@ -179,7 +179,7 @@ if uploaded_file_a:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
     
-print(pd.dtype(dfa_tratado, df_tratado))
+print(dfa_tratado.dtype)
 
 dfp = pd.merge(dfa_tratado, df_tratado, how='right', on='participacao')
 
