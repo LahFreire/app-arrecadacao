@@ -180,6 +180,7 @@ if uploaded_file_a:
     )
     
 dfp = pd.merge(dfa_tratado, df_tratado, how='right', on='participacao').drop_duplicates()
+st.write("Prévia dos dados concatenados:", dfp.head())
 
 # Preparar para download
 buffer_p = BytesIO()
